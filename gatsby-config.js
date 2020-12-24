@@ -1,3 +1,5 @@
+require(`dotenv`).config()
+
 const path = require(`path`)
 
 const config = require(`./src/utils/siteConfig`)
@@ -9,6 +11,10 @@ try {
     ghostConfig = require(`./.ghost`)
 } catch (e) {
     ghostConfig = {
+        development: {
+            apiUrl: process.env.GHOST_API_URL,
+            contentApiKey: process.env.GHOST_CONTENT_API_KEY,
+        },
         production: {
             apiUrl: process.env.GHOST_API_URL,
             contentApiKey: process.env.GHOST_CONTENT_API_KEY,
@@ -47,6 +53,9 @@ module.exports = {
                 path: path.join(__dirname, `src`, `pages`),
                 name: `pages`,
             },
+        },
+        {
+            resolve: `gatsby-theme-ghost-members`,
         },
         // Setup for optimised images.
         // See https://www.gatsbyjs.org/packages/gatsby-image/
